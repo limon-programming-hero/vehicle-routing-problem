@@ -1,11 +1,10 @@
-
 # Solve vehicle routing problem using Genetic Algorithm 2019
 
 ## Usage
 
-* clone the project
-* chose the right paramaters and hit execute button
-* when the algorithm done  from the aside select a route to see it on visual part 
+- clone the project
+- chose the right parameters and hit execute button
+- when the algorithm done from the aside select a route to see it on visual part
 
 ## Vehicle Routing Problem (VRP)
 
@@ -17,7 +16,7 @@ There are several variations of the VRP, including the capacitated VRP (CVRP), w
 
 The VRP is an important problem in logistics and transportation, with applications in areas such as delivery routing, waste collection, and school bus routing. Efficient algorithms and heuristics have been developed to solve the problem, including genetic algorithms, tabu search, and ant colony optimization.
 
-##  Genetic Algorithm (GA)
+## Genetic Algorithm (GA)
 
 A genetic algorithm (GA) is a search-based optimization algorithm that is inspired by the process of natural selection and genetics. The goal of a GA is to find the optimal solution to a problem by iteratively generating and improving a population of candidate solutions.
 
@@ -26,3 +25,4 @@ The GA starts by randomly generating an initial population of candidate solution
 The new population of chromosomes is evaluated using the fitness function, and the process of selection, reproduction, and genetic operators is repeated until a satisfactory solution is found or a stopping criterion is met. The algorithm often converges to a good solution quickly, but there is no guarantee that it will find the optimal solution.
 
 The GA has been successfully applied to a wide range of optimization problems, including function optimization, machine learning, scheduling, and resource allocation. It is a popular algorithm in the field of artificial intelligence and has been used in applications such as robotics, game playing, and image processing.
+# vehicle-routing-problem

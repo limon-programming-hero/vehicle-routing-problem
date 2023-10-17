@@ -1,10 +1,13 @@
+// creating customer named object class.
 class customer {
+  // done
   constructor(custNo, Xcoord, Ycoord, demand) {
     this.custNo = custNo;
     this.Xcoord = Xcoord;
     this.Ycoord = Ycoord;
     this.demand = demand;
 
+    // this draw function is used to draw the user interface of the customers locations
     this.draw = function () {
       if (custNo == 0) {
         ctx.beginPath();

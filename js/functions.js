@@ -151,7 +151,7 @@ function showOneRoute() {
 ////////////////
 var dataNotif = document.getElementById("data-notif")
 var inputNotif = document.getElementById("input-notif")
-
+// done
 function checkInput() {
     if (custData[0] == undefined) {
 
@@ -210,12 +210,14 @@ function calcDistanceRoute(tab) {
 
 
 //// REMOVE ELEMENT FROM ARRAY
+// done 
 function removeElement(array, index) {
     array.splice(index, 1);
 }
 
 
 //remove repeated elements in an array
+// done
 function removeRepeate(tab) {
     var repElement = [];
     let i = 0;
@@ -233,6 +235,7 @@ function removeRepeate(tab) {
 }
 
 ///// CALC LOAD OF A ROUTE
+// done
 function calcLoad(route) {
     let load = 0;
     for (let i = 0; i < route.length; i++) {
@@ -254,6 +257,7 @@ function exist(e, tab) {
 
 
 //create new array function
+// done
 function newTab(arr) {
     var newtab = [];
     for (let i = 0; i < arr.length; i++) {
@@ -265,7 +269,7 @@ function newTab(arr) {
 
 
 //// COMPARE 
-
+// done
 function compare(a, b) {
     const x = a.gain;
     const y = b.gain;

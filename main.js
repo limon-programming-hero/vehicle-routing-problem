@@ -31,8 +31,8 @@ var inter = 0;
 ////// GET DATA FROM FILES
 const fileSelector = document.getElementById('data-btn');
 var x;
-
-fileSelector.addEventListener('change', () => {
+// done
+fileSelector.addEventListener("change", () => {
   //hide notification
   dataNotif.style.display = 'none';
 
@@ -41,7 +41,9 @@ fileSelector.addEventListener('change', () => {
       .then(response => response.text())
       .then(txt => {
         custData = [];
+        // console.log(txt);
         custData = getData(txt);
+        console.log(custData)
       });
   } else {
     custData = [];
@@ -50,9 +52,10 @@ fileSelector.addEventListener('change', () => {
 });
 
 //////////////////////////////////////
-
+// done
 function getData(txt) {
   var txtToArr = txt.split(/\r?\n/);
+  // console.log(txtToArr)
   //var txtToArr = txt.split('\r\n');
 
   // var lineArr = x.split(' ');
@@ -78,9 +81,10 @@ function getData(txt) {
       Ycoord = parseInt(txtToArr[i].split(' ').filter((e) => e != '')[2]),
       demand = parseInt(txtToArr[i].split(' ').filter((e) => e != '')[3]);
 
+    // console.log(custNo, Xcoord, Ycoord, demand)
     var cust = new customer(custNo, Xcoord, Ycoord, demand);
     cust.draw();
-
+    // console.log(cust)
     custArr.push(cust);
   }
 
@@ -89,12 +93,16 @@ function getData(txt) {
 
 ///////////////////////////////////////////////////////////
 var customersDistance = [];
-
+// done
 function calcDistance() {
   customersDistance = [];
   let xTab = [];
+
+  // here custDat.length - 1 is used, because we will calculate the distance and so we need to take the outer for loop upto 2nd last customer 
   for (let i = 0; i < custData.length - 1; i++) {
     xTab = [];
+    // console.log(custData[i].custNo)
+    // console.log(custData[i], custData.length);
     for (let j = i + 1; j < custData.length; j++) {
       let x1 = custData[i].Xcoord;
       let y1 = custData[i].Ycoord;
@@ -105,10 +113,12 @@ function calcDistance() {
     }
     customersDistance.push(xTab);
   }
+  console.log(customersDistance);
 }
-
+// done
 function calcSaving() {
   let gainArr = [];
+  // console.log(custData)
   for (let i = 1; i < custData.length - 1; i++) {
     xTab = [];
     for (let j = i + 1; j < custData.length; j++) {
@@ -116,9 +126,12 @@ function calcSaving() {
         c2 = custData[j].custNo;
 
       let gain =
-        customersDistance[0][c1 - 1] +
-        customersDistance[0][c2 - 1] -
+        customersDistance[0][c1 - 1]   //here customersDistance[0][0] means the distance from depot to customer 1 and so, customersDistance[0][c1 - 1] means distance between depot and customer c1 
+        +
+        customersDistance[0][c2 - 1] //here customersDistance[0][0] means the distance from depot to customer 1 and so, customersDistance[0][c2 - 1] means distance between depot and customer c2 
+        -
         customersDistance[c1][Math.abs(c1 + 1 - c2)];
+      // gain = ( distance from depot to customer c1 + distance from depot to customer c2 - distance between customer c1 and customer c2)
 
       let obj = {
         cust1: c1,
@@ -129,7 +142,10 @@ function calcSaving() {
       gainArr.push(obj);
     }
   }
+  // console.log(gainArr.sort(compare).reverse())
   return gainArr.sort(compare).reverse();
+  // gainArr.sort(compare) => rearranging all the objects in a descending order based on gain value;
+  // here compare is a function which mainly do the sort method 
 }
 
 /////////********************** */
@@ -144,6 +160,7 @@ function excute() {
   mutationRate = parseFloat(mutationInput.value) / 100;
   nbrOfGenerations = parseInt(generationInput.value);
 
+
   if (checkInput()) {
     //DOM STUFF
 
@@ -155,12 +172,17 @@ function excute() {
     calcDistance();
 
     savingsArr = calcSaving();
+    console.log(savingsArr);
 
     pop = new population(populationSize, crossoverRa, mutationRate);
     for (let i = 0; i < populationSize; i++) {
+      // newTab(custData) just makes an similar array of custData
+      // newTab(custData) === custData
       pop.membersOfPop[i] = new genes(newTab(custData), 0);
     }
-
+    // const showPopMembers = pop.membersOfPop;
+    // console.log(showPopMembers);
+    // console.log(customersDistance);
     pop.calcFitness(customersDistance);
 
     if (inter == 0) {
@@ -190,7 +212,9 @@ function excute() {
           pop.orderPop();
           pop.naturalSelection();
           pop.crossover();
+          // console.log(children)
           pop.mutation();
+
           children = [];
           drawPath();
           txt.innerHTML = gen;
@@ -247,15 +271,16 @@ function drawPath() {
 
 
 
-//// customer event listner click
+//// customer event listener click
 var selectedCustomer = document.getElementById('selected-customer');
-
+// done
 c.addEventListener('click', function (event) {
   custData.forEach((e) => {
     e.draw();
   });
 
   let rect = c.getBoundingClientRect();
+  // console.log(rect, event);
   let x = event.clientX - rect.left; /// 15;
   let y = event.clientY - rect.top;
   x = (x * canvasWidth) / window.innerWidth;

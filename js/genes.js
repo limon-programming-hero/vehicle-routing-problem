@@ -28,6 +28,8 @@ function checkNearest(tab) {
 ///////////////////////
 /******************************** */
 
+// generating genes with the help of savingsArr array. here genes helps to indirectly the fitness function
+// done
 function clarckWrightHeur() {
   let gene = [];
   let fakeGene = [];
@@ -88,10 +90,58 @@ function clarckWrightHeur() {
   gene.push(custData[0]);
   dna.push(gene);
   heurAmelioration(dna);
+  console.log(dna);
   return dna;
 }
 
-/********************************* */
+
+// if (
+//   !exist(savingsArr[i].cust1, fakeGene) &&
+//   exist(savingsArr[i].cust2, fakeGene)
+// ) {
+//   if (calcLoad(gene) + custData[savingsArr[i].cust1].demand < capacity) {
+//     if (gene[0].custNo == savingsArr[i].cust2) {
+//       gene.unshift(custData[savingsArr[i].cust1]);
+//     } else {
+//       gene.push(custData[savingsArr[i].cust1]);
+//     }
+//     fakeGene.push(custData[savingsArr[i].cust1]);
+//   }
+// }
+// else if (
+//   exist(savingsArr[i].cust1, fakeGene) &&
+//   !exist(savingsArr[i].cust2, fakeGene)
+// ) {
+//   if (calcLoad(gene) + custData[savingsArr[i].cust2].demand < capacity) {
+//     if (gene[0].custNo == savingsArr[i].cust1) {
+//       gene.unshift(custData[savingsArr[i].cust2]);
+//     } else {
+//       gene.push(custData[savingsArr[i].cust2]);
+//     }
+//     fakeGene.push(custData[savingsArr[i].cust2]);
+//   }
+// }
+// else if (
+//   !exist(savingsArr[i].cust1, fakeGene) &&
+//   !exist(savingsArr[i].cust2, fakeGene)
+// ) {
+//   if (calcLoad(gene) / capacity > 0.9) {
+//     gene.unshift(custData[0]);
+//     gene.push(custData[0]);
+
+//     dna.push(gene);
+//     gene = [];
+//     gene[0] = custData[savingsArr[i].cust1];
+//     gene[1] = custData[savingsArr[i].cust2];
+
+//     fakeGene.push(custData[savingsArr[i].cust1]);
+//     fakeGene.push(custData[savingsArr[i].cust2]);
+//   }
+// }
+
+/**********************************/
+// doing 2 individual point or 3 individual point almost crossover
+// done
 function heurAmelioration(tab) {
 
   if (Math.random > 0.5) {
@@ -109,6 +159,7 @@ function heurAmelioration(tab) {
     x = Math.floor(Math.random() * (tab.length - 1));
     y = Math.floor(Math.random() * (tab.length - 1));
     // console.log(x + "  " + y);
+    // here Math.floor is used for ignoring the last value of any route which is mainly represents the depot.
     let a = Math.floor(1 + Math.random() * (tab[x].length - 2));
     let b = Math.floor(1 + Math.random() * (tab[x].length - 2));
     let c = Math.floor(1 + Math.random() * (tab[y].length - 2));
@@ -121,8 +172,9 @@ function heurAmelioration(tab) {
 
   }
 }
-/********************************* */
-
+/**********************************/
+// generating genes which are mainly real coded chromosome with having each routes
+// done 
 function generateGenes(custData, capacity) {
   let genes = [];
   let depot = custData[0];
@@ -132,7 +184,8 @@ function generateGenes(custData, capacity) {
   let index = 0;
   while (custData.length > 0) {
 
-
+    // here calcLoad(route) calculating the demand depot
+    // chekLoad is the total demand of route and the 1st customer demand for the first time.
     let chekLoad = calcLoad(route) + custData[index].demand;
     if (chekLoad < capacity) {
       route.push(custData[index]);
@@ -149,8 +202,8 @@ function generateGenes(custData, capacity) {
     route.push(route[0]);
     genes.push(route);
   }
-
-  heurAmelioration(genes);
+  heurAmelioration(genes); // here for each genes some changes in the routes are taken place , which is almost similar to crossOver. As all the genes or parents are created using two methods, all the genes will be similar according to two different groups , there needs some changes so that all the genes will be different from each other.
+  // console.log("after:", genes)
 
 
   return genes;
@@ -158,7 +211,8 @@ function generateGenes(custData, capacity) {
 
 
 
-/////////// BUILD GENES AFTER CROSSOVER AND MUTATION
+/////////// BUILDING GENES AFTER CROSSOVER AND MUTATION
+// done
 function buildGenes(tab) {
   let genes = [];
   let depot = custData[0];
@@ -167,8 +221,8 @@ function buildGenes(tab) {
 
   let index = 0;
   while (tab.length > index) {
-    let chekLoad = calcLoad(route) + tab[index].demand;
-    if (chekLoad < capacity) {
+    let checkLoad = calcLoad(route) + tab[index].demand;
+    if (checkLoad < capacity) {
       route.push(tab[index]);
 
       b = true;
@@ -188,28 +242,29 @@ function buildGenes(tab) {
   return genes;
 }
 
+// generating genes which provides initial single population one by one with forLoop
 class genes {
-  constructor(custs, origin) {
+  constructor(custs, origin) { //here if origin = 0 the it means that the genes are generated initially and it origin = 1 then it means the genes are generated after crossover and mutation
     this.dna = [];
     this.fitness = 0;
     if (origin == 0) {
       /// GENERATE GENES FROM 50% OF HEURISTIC 1
       ///   + 50% OF CLARCK & WRIGHT HEURISTIC
 
+      // dna are generated by two methods one is generateGenes and another is clarke Wright Heuristic (ClarckWrightHeur) method. 
       if (Math.random() < 0.5) {
         this.dna = generateGenes(custs, capacity);
       } else {
         this.dna = clarckWrightHeur();
       }
-
-
-
-
     } else {
       this.dna = buildGenes(custs);
     }
+    // console.log(this.dna)
   }
 
+  // calculating total distance for each DNA ; which is the fitness function
+  // done
   calcFitness(tab) {
     let distance = 0;
     for (let i = 0; i < this.dna.length; i++) {
