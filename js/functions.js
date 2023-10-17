@@ -11,7 +11,7 @@ var populationInput = document.getElementById("nbr-of-population"),
     crossoverInput = document.getElementById("crossover-ratio"),
     mutationInput = document.getElementById("mutation-rate"),
     generationInput = document.getElementById("nbr-of-generations"),
-    excuteBtn = document.getElementById("excute-btn");
+    excuteBtn = document.getElementById("execute-btn");
 
 
 
@@ -85,10 +85,10 @@ generationInput.addEventListener("input", () => {
 var resultDiv = document.getElementById('results'),
     distanceElem = document.getElementById("distance-result"),
     vehiclUse = document.getElementById("vehicules-result"),
-    routesRes = document.getElementById("routes-result")
+    routesRes = document.getElementById("routes-result"),
 
 
-distanceRoute = document.getElementById("distance-route-result"),
+    distanceRoute = document.getElementById("distance-route-result"),
     numRoute = document.getElementById("num-route-result"),
     loadRoute = document.getElementById("vehicules-load-result"),
     vehicCapacityRes = document.getElementById("vehicules-capacity");
@@ -178,7 +178,8 @@ function checkInput() {
 }
 
 
-
+// calculating distance for the clicked route
+// done
 function calcDistanceRoute(tab) {
     let x = 0;
     for (let j = 0; tab.length - 1 > j; j++) {

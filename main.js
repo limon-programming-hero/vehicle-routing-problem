@@ -18,7 +18,7 @@ var nbrOFvehicle,
   crossoverRa,
   nbrOfGenerations;
 
-var excuteBtn = document.getElementById('excute-btn'),
+var excuteBtn = document.getElementById('execute-btn'),
   geneNotif = document.getElementById('notif');
 procNotif = document.getElementById('proc-notif');
 
@@ -153,7 +153,7 @@ function calcSaving() {
 /////////////////////////////
 ////////////////////
 
-function excute() {
+function execute() {
 
   populationSize = parseInt(populationInput.value);
   crossoverRa = parseFloat(crossoverInput.value) / 100;

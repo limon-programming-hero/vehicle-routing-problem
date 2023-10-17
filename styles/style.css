@@ -117,7 +117,7 @@ input[type='number'] {
   font-weight: 500;
 }
 
-#excute-btn {
+#execute-btn {
   color: rgb(241, 241, 241);
   margin: 0.8rem auto;
   width: max-content;

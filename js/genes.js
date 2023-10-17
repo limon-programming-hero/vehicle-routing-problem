@@ -260,28 +260,38 @@ class genes {
     } else {
       this.dna = buildGenes(custs);
     }
-    // console.log(this.dna)
+    console.log({ dna: this.dna })
   }
 
   // calculating total distance for each DNA ; which is the fitness function
   // done
   calcFitness(tab) {
     let distance = 0;
+    const ve_operating_cost = veOperatingCost(this.dna.length);
+    let total_transportation_cost = 0;
     for (let i = 0; i < this.dna.length; i++) {
+      let route_distance = 0;
       for (let j = 0; j < this.dna[i].length - 1; j++) {
         if (this.dna[i][j].custNo < this.dna[i][j + 1].custNo) {
           var index = Math.abs(
             this.dna[i][j].custNo + 1 - this.dna[i][j + 1].custNo
           );
           distance += tab[this.dna[i][j].custNo][index];
+          route_distance += tab[this.dna[i][j].custNo][index];
         } else {
           var index = Math.abs(
             this.dna[i][j + 1].custNo + 1 - this.dna[i][j].custNo
           );
           distance += tab[this.dna[i][j + 1].custNo][index];
+          route_distance += tab[this.dna[i][j + 1].custNo][index];
         }
       }
+      const transportation_cost = transportationCost(route_distance); // calculating transportation cost for a single route. here we calculate single route distance so that we can consider heterogenous vehicle in further calculations. otherwise we can just use total distance .
+      total_transportation_cost += transportation_cost; // calculating total transportation cost for the full solution or full dna;
     }
-    this.fitness = parseFloat(distance.toFixed(3));
+    const fitness_value = ve_operating_cost + total_transportation_cost //total fitness calculating vehicle operating cost and total transportation cost
+
+    // this.fitness = parseFloat(distance.toFixed(3)); //this is the previous fitness value
+    this.fitness = parseFloat(fitness_value.toFixed(3));
   }
 }
