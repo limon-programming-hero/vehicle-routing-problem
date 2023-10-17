@@ -84,21 +84,21 @@ generationInput.addEventListener("input", () => {
 /// OUTPUT ELEMENT
 var resultDiv = document.getElementById('results'),
     distanceElem = document.getElementById("distance-result"),
-    vehiclUse = document.getElementById("vehicules-result"),
+    vehicleUse = document.getElementById("vehicles-result"),
     routesRes = document.getElementById("routes-result"),
 
 
     distanceRoute = document.getElementById("distance-route-result"),
     numRoute = document.getElementById("num-route-result"),
-    loadRoute = document.getElementById("vehicules-load-result"),
-    vehicCapacityRes = document.getElementById("vehicules-capacity");
+    loadRoute = document.getElementById("vehicles-load-result"),
+    vehicleCapacityRes = document.getElementById("vehicles-capacity");
 
 
 function showResults() {
     resultDiv.style.display = "block";
     routesRes.innerHTML = "";
     distanceElem.innerHTML = pop.membersOfPop[0].fitness;
-    vehiclUse.innerHTML = pop.membersOfPop[0].dna.length;
+    vehicleUse.innerHTML = pop.membersOfPop[0].dna.length;
     for (let i = 0; i < pop.membersOfPop[0].dna.length; i++) {
         var li = document.createElement("li");
         for (let j = 0; j < pop.membersOfPop[0].dna[i].length - 1; j++) {
@@ -136,7 +136,7 @@ function showOneRoute() {
     numRoute.innerHTML = parseInt(i) + 1;
     distanceRoute.innerHTML = calcDistanceRoute(pop.membersOfPop[0].dna[i]);
     loadRoute.innerHTML = calcLoad(pop.membersOfPop[0].dna[i]);
-    vehicCapacityRes.innerHTML = capacity;
+    vehicleCapacityRes.innerHTML = capacity;
 }
 
 
