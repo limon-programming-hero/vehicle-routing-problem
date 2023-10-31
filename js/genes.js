@@ -247,6 +247,8 @@ class genes {
   constructor(custs, origin) { //here if origin = 0 the it means that the genes are generated initially and it origin = 1 then it means the genes are generated after crossover and mutation
     this.dna = [];
     this.fitness = 0;
+    this.costDistribution = [];
+    console.log({ constDistribution: this.costDistribution })
     if (origin == 0) {
       /// GENERATE GENES FROM 50% OF HEURISTIC 1
       ///   + 50% OF CLARCK & WRIGHT HEURISTIC
@@ -275,9 +277,9 @@ class genes {
     let total_transportation_cost = 0;
     let totalFreshness_costC4 = 0;
     let total_energy_cost = 0;
+    const unit_fuel_price = 6.8;
 
     for (let i = 0; i < this.dna.length; i++) {
-      const unit_fuel_price = 6.8;
       let route_distance = 0;
       let single_cust_demand = 0;
       let freshness_cost = 0;
@@ -301,6 +303,9 @@ class genes {
           route_distance += single_cust_distance;
         }
         single_cust_demand = this.dna[i][j].demand;
+        console.log({
+          single_cust_demand, single_cust_distance
+        })
         remaining_vehicle_load = remaining_vehicle_load - single_cust_demand;
         // console.log({ remaining_vehicle_load });
 

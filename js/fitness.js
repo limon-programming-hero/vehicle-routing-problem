@@ -11,15 +11,16 @@ const transportationCost = (distance) => {
     return distance * costPerUnitDistanceF2;
 
 }
-const freshnessCost = async (demand, route_distance) => {
+const freshnessCost = (demand, route_distance) => {
     const costPerUnitTimeF4 = 15; //taking as a constant cost per unit time;
     const unloadingCostPerUnitTimeF5 = 10; //taking as a constant value;
 
-    const costDuringDistributionC41 = await costPerUnitTimeF4 * (route_distance / speedOfVehicleV1); // cost during distribution C41 
-    const costDuringUnloadingC42 = await unloadingCostPerUnitTimeF5 * unloadingTimePerUnitV2 * demand; // cost during unloading during C42
+    const costDuringDistributionC41 = costPerUnitTimeF4 * (route_distance / speedOfVehicleV1); // cost during distribution C41 
+    const costDuringUnloadingC42 = unloadingCostPerUnitTimeF5 * unloadingTimePerUnitV2 * demand; // cost during unloading during C42
+    console.log({ costDuringDistributionC41, costDuringUnloadingC42 })
     return (costDuringDistributionC41 + costDuringUnloadingC42);
 }
-const energyCost = async (remainingLoad, fuelPriceF6, demand, route_distance) => {
+const energyCost = (remainingLoad, fuelPriceF6, demand, route_distance) => {
     const emptyFuelConsumptionU0 = 0.08; // fuel consumption for empty vehicle (Liter per unit distance))
     const fullLoadFuelConsumptionU1 = .102; // fuel consumption for full load vehicle (Liter per unit distance))
     const alfa1 = 2; // fuel consumption for refrigerator during distribution (Liter per time))
