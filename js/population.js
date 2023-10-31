@@ -7,7 +7,7 @@ class population {
     this.popArry;
     this.pool = [];
   }
-  // here all the membersOfPop gene's total distance is calculated
+  // here all the membersOfPop gene's total distance or fitness function is calculated
   calcFitness(tab) {
     console.log(this.membersOfPop);
     for (let i = 0; i < this.membersOfPop.length; i++) {
@@ -64,7 +64,7 @@ class population {
 
       let parent1 = prepareChrom(this.pool[x].dna);
       let parent2 = prepareChrom(this.pool[y].dna);
-
+      console.log(x, y)
       //CROSSOVER PARENT1 X PARENT2
       let randomPoint = parseInt(Math.random() * parent1.length);
       // let randomPoint = parseInt(parent1.length / 2);

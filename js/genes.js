@@ -265,31 +265,59 @@ class genes {
 
   // calculating total distance for each DNA ; which is the fitness function
   // done
+  // tab is the array of of total distances
   calcFitness(tab) {
+    let single_cust_distance = 0;
     let distance = 0;
+    // this.dna is a solution and so this.dna.length is the number of of routes
+    console.log({ dna: this.dna })
     const ve_operating_cost = veOperatingCost(this.dna.length);
     let total_transportation_cost = 0;
+    let totalFreshness_costC4 = 0;
+    let total_energy_cost = 0;
+
     for (let i = 0; i < this.dna.length; i++) {
+      const unit_fuel_price = 6.8;
       let route_distance = 0;
+      let single_cust_demand = 0;
+      let freshness_cost = 0;
+      let energy_cost = 0;
+      let remaining_vehicle_load = this.dna[i].reduce((total, singleDna) => total + singleDna.demand, 0); // getting total quantity that a vehicle is delivering for a specific route
+
       for (let j = 0; j < this.dna[i].length - 1; j++) {
         if (this.dna[i][j].custNo < this.dna[i][j + 1].custNo) {
           var index = Math.abs(
             this.dna[i][j].custNo + 1 - this.dna[i][j + 1].custNo
           );
-          distance += tab[this.dna[i][j].custNo][index];
-          route_distance += tab[this.dna[i][j].custNo][index];
+          single_cust_distance = tab[this.dna[i][j].custNo][index];
+          distance += single_cust_distance;
+          route_distance += single_cust_distance;
         } else {
           var index = Math.abs(
             this.dna[i][j + 1].custNo + 1 - this.dna[i][j].custNo
           );
-          distance += tab[this.dna[i][j + 1].custNo][index];
-          route_distance += tab[this.dna[i][j + 1].custNo][index];
+          single_cust_distance = tab[this.dna[i][j + 1].custNo][index]
+          distance += single_cust_distance;
+          route_distance += single_cust_distance;
         }
+        single_cust_demand = this.dna[i][j].demand;
+        remaining_vehicle_load = remaining_vehicle_load - single_cust_demand;
+        // console.log({ remaining_vehicle_load });
+
+        freshness_cost = freshnessCost(single_cust_demand, single_cust_distance); //getting freshness cost for each customer;
+        totalFreshness_costC4 += freshness_cost;
+
+        energy_cost = energyCost(remaining_vehicle_load, unit_fuel_price, single_cust_demand, single_cust_distance);
+        total_energy_cost += energy_cost;
       }
-      const transportation_cost = transportationCost(route_distance); // calculating transportation cost for a single route. here we calculate single route distance so that we can consider heterogenous vehicle in further calculations. otherwise we can just use total distance .
-      total_transportation_cost += transportation_cost; // calculating total transportation cost for the full solution or full dna;
+      const route_transportation_cost = transportationCost(route_distance); // calculating transportation cost for a single route. here we calculate single route distance so that we can consider heterogenous vehicle in further calculations. otherwise we can just use total distance .
+      total_transportation_cost += route_transportation_cost; // calculating total transportation cost for the full solution or full dna;
     }
-    const fitness_value = ve_operating_cost + total_transportation_cost //total fitness calculating vehicle operating cost and total transportation cost
+    const total_fuel_consumption = (total_energy_cost / unit_fuel_price);
+    const total_CO2_emission_cost = totalCO2EmissionCost(total_fuel_consumption);// total CO2 emission cost;
+
+    console.log({ ve_operating_cost, total_transportation_cost, totalFreshness_costC4, total_energy_cost, total_CO2_emission_cost });
+    const fitness_value = ve_operating_cost + total_transportation_cost + totalFreshness_costC4 + total_energy_cost + total_CO2_emission_cost;//total fitness calculating vehicle operating cost , total transportation cost,  freshness cost, total energy cost, total CO2 emission cost;
 
     // this.fitness = parseFloat(distance.toFixed(3)); //this is the previous fitness value
     this.fitness = parseFloat(fitness_value.toFixed(3));
