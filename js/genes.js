@@ -271,18 +271,21 @@ class genes {
   calcFitness(tab) {
     let single_cust_distance = 0;
     let distance = 0;
+    const unit_fuel_price = 6.8;
     // this.dna is a solution and so this.dna.length is the number of of routes
     console.log({ dna: this.dna })
     const ve_operating_cost = veOperatingCost(this.dna.length);
+
     let total_transportation_cost = 0;
     let totalFreshness_costC4 = 0;
     let total_energy_cost = 0;
-    const unit_fuel_price = 6.8;
+    let total_cargo_damage_cost = 0;
 
     for (let i = 0; i < this.dna.length; i++) {
       let route_distance = 0;
       let single_cust_demand = 0;
       let freshness_cost = 0;
+      let cargo_damage_cost = 0;
       let energy_cost = 0;
       let remaining_vehicle_load = this.dna[i].reduce((total, singleDna) => total + singleDna.demand, 0); // getting total quantity that a vehicle is delivering for a specific route
 
@@ -309,6 +312,9 @@ class genes {
         remaining_vehicle_load = remaining_vehicle_load - single_cust_demand;
         // console.log({ remaining_vehicle_load });
 
+        cargo_damage_cost = cargoDamageCost(single_cust_demand, route_distance, remaining_vehicle_load); // getting cargoDamageCost for each customer ;
+        total_cargo_damage_cost += cargo_damage_cost;
+
         freshness_cost = freshnessCost(single_cust_demand, single_cust_distance); //getting freshness cost for each customer;
         totalFreshness_costC4 += freshness_cost;
 
@@ -321,8 +327,8 @@ class genes {
     const total_fuel_consumption = (total_energy_cost / unit_fuel_price);
     const total_CO2_emission_cost = totalCO2EmissionCost(total_fuel_consumption);// total CO2 emission cost;
 
-    console.log({ ve_operating_cost, total_transportation_cost, totalFreshness_costC4, total_energy_cost, total_CO2_emission_cost });
-    const fitness_value = ve_operating_cost + total_transportation_cost + totalFreshness_costC4 + total_energy_cost + total_CO2_emission_cost;//total fitness calculating vehicle operating cost , total transportation cost,  freshness cost, total energy cost, total CO2 emission cost;
+    const fitness_value = ve_operating_cost + total_transportation_cost + totalFreshness_costC4 + total_energy_cost + total_CO2_emission_cost + total_cargo_damage_cost;//total fitness calculating vehicle operating cost , total transportation cost, total cargo damage cost , total freshness cost, total energy cost, total CO2 emission cost;
+    console.log({ ve_operating_cost, total_transportation_cost, totalFreshness_costC4, total_energy_cost, total_CO2_emission_cost, total_cargo_damage_cost, fitness_value });
 
     // this.fitness = parseFloat(distance.toFixed(3)); //this is the previous fitness value
     this.fitness = parseFloat(fitness_value.toFixed(3));
