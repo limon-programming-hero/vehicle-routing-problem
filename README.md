@@ -1,4 +1,4 @@
-# Solve vehicle routing problem using Genetic Algorithm 2019
+# Solve vehicle routing problem using Genetic Algorithm
 
 ## Usage
 
@@ -25,4 +25,5 @@ The GA starts by randomly generating an initial population of candidate solution
 The new population of chromosomes is evaluated using the fitness function, and the process of selection, reproduction, and genetic operators is repeated until a satisfactory solution is found or a stopping criterion is met. The algorithm often converges to a good solution quickly, but there is no guarantee that it will find the optimal solution.
 
 The GA has been successfully applied to a wide range of optimization problems, including function optimization, machine learning, scheduling, and resource allocation. It is a popular algorithm in the field of artificial intelligence and has been used in applications such as robotics, game playing, and image processing.
+
 # vehicle-routing-problem

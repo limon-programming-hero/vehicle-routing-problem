@@ -90,7 +90,7 @@ function clarckWrightHeur() {
   gene.push(custData[0]);
   dna.push(gene);
   heurAmelioration(dna);
-  console.log(dna);
+  // console.log(dna);
   return dna;
 }
 
@@ -140,7 +140,8 @@ function clarckWrightHeur() {
 // }
 
 /**********************************/
-// doing 2 individual point or 3 individual point almost crossover
+// doing 2 individual point or 3 individual point crossover
+// 50% of the route is done by 2 individual point crossover and rest 50% of the route is done by 3 individual point crossover
 // done
 function heurAmelioration(tab) {
 
@@ -242,13 +243,13 @@ function buildGenes(tab) {
   return genes;
 }
 
-// generating genes which provides initial single population one by one with forLoop
+// generating genes which provides initial single population one by one using forLoop
 class genes {
   constructor(custs, origin) { //here if origin = 0 the it means that the genes are generated initially and it origin = 1 then it means the genes are generated after crossover and mutation
     this.dna = [];
     this.fitness = 0;
     this.costDistribution = [];
-    console.log({ constDistribution: this.costDistribution })
+    // console.log({ constDistribution: this.costDistribution })
     if (origin == 0) {
       /// GENERATE GENES FROM 50% OF HEURISTIC 1
       ///   + 50% OF CLARCK & WRIGHT HEURISTIC
@@ -271,9 +272,9 @@ class genes {
   calcFitness(tab) {
     let single_cust_distance = 0;
     let distance = 0;
-    const unit_fuel_price = 6.8;
+    const unit_fuel_price = 6.68;
     // this.dna is a solution and so this.dna.length is the number of of routes
-    console.log({ dna: this.dna })
+    // console.log({ dna: this.dna })
     const ve_operating_cost = veOperatingCost(this.dna.length);
 
     let total_transportation_cost = 0;
@@ -306,9 +307,9 @@ class genes {
           route_distance += single_cust_distance;
         }
         single_cust_demand = this.dna[i][j].demand;
-        console.log({
-          single_cust_demand, single_cust_distance
-        })
+        // console.log({
+        //   single_cust_demand, single_cust_distance
+        // })
         remaining_vehicle_load = remaining_vehicle_load - single_cust_demand;
         // console.log({ remaining_vehicle_load });
 
