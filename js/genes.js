@@ -274,7 +274,7 @@ class genes {
     let distance = 0;
     const unit_fuel_price = 6.68;
     // this.dna is a solution and so this.dna.length is the number of of routes
-    // console.log({ dna: this.dna })
+    console.log({ dna: this.dna })
     const ve_operating_cost = veOperatingCost(this.dna.length);
 
     let total_transportation_cost = 0;

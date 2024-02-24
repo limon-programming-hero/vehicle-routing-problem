@@ -7,7 +7,7 @@ const veOperatingCost = (numOfVehicle) => {
 }
 const transportationCost = (distance) => {
     // the transportation cost per unit distance = 20 tk ;
-    const costPerUnitDistanceF2 = 3;
+    const costPerUnitDistanceF2 = 2;
     return distance * costPerUnitDistanceF2;
 }
 const cargoDamageCost = (demand, route_distance, remainingLoad) => {
