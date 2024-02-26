@@ -59,3 +59,10 @@ const totalCO2EmissionCost = (fuelConsumptionFC) => {
         return 0;
     }
 }
+const packagingCost = (demand) => {
+    const packagingCostPerUnitP = .80;
+    const packagingWasteCostPerUnitW = 0.40;
+    const packagingLaborCostPerUnitL = 0.80;
+    const packagingCostTotal = (packagingCostPerUnitP + packagingWasteCostPerUnitW + packagingLaborCostPerUnitL) * demand;
+    return packagingCostTotal;
+}

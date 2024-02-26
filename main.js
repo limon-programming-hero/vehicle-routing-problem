@@ -7,6 +7,8 @@ let canvasWidth = 2560,
   canvasHeight = 1440;
 
 var ctx;
+// GET CPU TIME 
+var time1, time2 = 0;
 
 //GET DATA
 
@@ -154,6 +156,7 @@ function calcSaving() {
 ////////////////////
 
 function execute() {
+  time1 = performance.now();
 
   populationSize = parseInt(populationInput.value);
   crossoverRa = parseFloat(crossoverInput.value) / 100;
@@ -208,6 +211,8 @@ function execute() {
           excuteBtn.disabled = false
           excuteBtn.style.backgroundColor = "rgb(0, 0, 22)"
           excuteBtn.style.cursor = "pointer"
+          time2 = performance.now();
+          console.log({ CPUTime: time2 - time1 })
           inter = 0;
         } else {
           pop.orderPop();
