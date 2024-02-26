@@ -7,6 +7,8 @@ let canvasWidth = 2560,
   canvasHeight = 1440;
 
 var ctx;
+// GET CPU TIME 
+var time1, time2 = 0;
 
 //GET DATA
 
@@ -61,7 +63,7 @@ function getData(txt) {
   // var lineArr = x.split(' ');
   //   var numbers = lineArr.filter((e) => e != '');
   nbrOFvehicle = parseInt(txtToArr[4].split(' ').filter((e) => e != '')[0]);
-  capacity = parseInt(txtToArr[4].split(' ').filter((e) => e != '')[1]);
+  capacity = parseFloat(txtToArr[4].split(' ').filter((e) => e != '')[1]);
 
   //CANVAS SETUP
   c.width = canvasWidth;
@@ -77,9 +79,9 @@ function getData(txt) {
 
   for (let i = 9; i < txtToArr.length - 1; i++) {
     var custNo = parseInt(txtToArr[i].split(' ').filter((e) => e != '')[0]),
-      Xcoord = parseInt(txtToArr[i].split(' ').filter((e) => e != '')[1]),
-      Ycoord = parseInt(txtToArr[i].split(' ').filter((e) => e != '')[2]),
-      demand = parseInt(txtToArr[i].split(' ').filter((e) => e != '')[3]);
+      Xcoord = parseFloat(txtToArr[i].split(' ').filter((e) => e != '')[1]),
+      Ycoord = parseFloat(txtToArr[i].split(' ').filter((e) => e != '')[2]),
+      demand = parseFloat(txtToArr[i].split(' ').filter((e) => e != '')[3]);
 
     // console.log(custNo, Xcoord, Ycoord, demand)
     var cust = new customer(custNo, Xcoord, Ycoord, demand);
@@ -113,7 +115,7 @@ function calcDistance() {
     }
     customersDistance.push(xTab);
   }
-  console.log(customersDistance);
+  // console.log(customersDistance);
 }
 // done
 function calcSaving() {
@@ -154,13 +156,14 @@ function calcSaving() {
 ////////////////////
 
 function execute() {
+  time1 = performance.now();
 
   populationSize = parseInt(populationInput.value);
   crossoverRa = parseFloat(crossoverInput.value) / 100;
   mutationRate = parseFloat(mutationInput.value) / 100;
   nbrOfGenerations = parseInt(generationInput.value);
 
-
+  // console.log({ populationSize, mutationRate, nbrOfGenerations, crossoverRa })
   if (checkInput()) {
     //DOM STUFF
 
@@ -171,8 +174,9 @@ function execute() {
     selectedCustomer.style.display = 'none';
     calcDistance();
 
+    // console.log({ customersDistance });
     savingsArr = calcSaving();
-    console.log(savingsArr);
+    // console.log({ savingsArr });
 
     pop = new population(populationSize, crossoverRa, mutationRate);
     for (let i = 0; i < populationSize; i++) {
@@ -180,8 +184,8 @@ function execute() {
       // newTab(custData) === custData
       pop.membersOfPop[i] = new genes(newTab(custData), 0);
     }
-    // const showPopMembers = pop.membersOfPop;
-    // console.log(showPopMembers);
+    const showPopMembers = pop.membersOfPop;
+    console.log(showPopMembers);
     // console.log(customersDistance);
     pop.calcFitness(customersDistance);
 
@@ -207,6 +211,8 @@ function execute() {
           excuteBtn.disabled = false
           excuteBtn.style.backgroundColor = "rgb(0, 0, 22)"
           excuteBtn.style.cursor = "pointer"
+          time2 = performance.now();
+          console.log({ CPUTime: time2 - time1 })
           inter = 0;
         } else {
           pop.orderPop();
@@ -214,7 +220,7 @@ function execute() {
           pop.crossover();
           // console.log(children)
           pop.mutation();
-
+          console.log({ pool: pop.pool, membersOfPop: pop.membersOfPop })
           children = [];
           drawPath();
           txt.innerHTML = gen;

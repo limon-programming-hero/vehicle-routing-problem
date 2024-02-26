@@ -1,5 +1,5 @@
-// creating customer named object class.
 class customer {
+  // creating customer named object class.
   // done
   constructor(custNo, Xcoord, Ycoord, demand) {
     this.custNo = custNo;

@@ -7,7 +7,7 @@ class population {
     this.popArry;
     this.pool = [];
   }
-  // here all the membersOfPop gene's total distance is calculated
+  // here all the membersOfPop gene's total distance or fitness function is calculated
   calcFitness(tab) {
     console.log(this.membersOfPop);
     for (let i = 0; i < this.membersOfPop.length; i++) {
@@ -20,6 +20,7 @@ class population {
     var orderTab = newTab(this.membersOfPop);   // creating a duplicate of memebersOfPop
     var tab = [];
     let index;
+    // console.log({ orderTab });
     while (orderTab.length > 0) {
       let fit = 0;
       for (let i = 0; i < orderTab.length; i++) {
@@ -33,7 +34,7 @@ class population {
       removeElement(orderTab, index);
     }
     this.membersOfPop = tab.reverse();
-
+    console.log({ membersOfPop: this.membersOfPop })
   }
   // mainly declare the value of pool;
   // done
@@ -45,13 +46,14 @@ class population {
     this.membersOfPop = newTab(this.membersOfPop).splice(0, this.popSize); //just keeping most fitted pop size numbers of solutions
   }
 
-  // selecting all the pool members (best fitness solutions) and randomly doing crossover between one solution with another.
+  // selecting all the pool members (best fitness solutions) and randomly doing crossover between one solution with another.By crossover from two parents, we will get 1 offspring.
   // done 
   crossover() {
     let x,
       y,
       tab = [];
 
+    console.log({ pool: this.pool })
     while (this.pool.length > 0) {
       //choosing Parent randomly
       x = parseInt(Math.random() * this.pool.length);
@@ -64,7 +66,7 @@ class population {
 
       let parent1 = prepareChrom(this.pool[x].dna);
       let parent2 = prepareChrom(this.pool[y].dna);
-
+      console.log(x, y)
       //CROSSOVER PARENT1 X PARENT2
       let randomPoint = parseInt(Math.random() * parent1.length);
       // let randomPoint = parseInt(parent1.length / 2);
@@ -99,6 +101,7 @@ class population {
   // done
   mutation() {
     let dna;
+    console.log({ children })
     for (let i = 0; i < children.length; i++) {
       dna = mutate(children[i]); //mutation done here
       let child = new genes(dna, 1); // making solution routes set
